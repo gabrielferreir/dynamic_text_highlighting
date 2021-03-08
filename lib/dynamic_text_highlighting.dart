@@ -3,6 +3,15 @@ library dynamic_text_highlighting;
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+String removeAccents(String str) {
+  var withDia =     'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
+  var withoutDia =  'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz';
+  for (int i = 0; i < withDia.length; i++) {
+    str = str.replaceAll(withDia[i], withoutDia[i]);
+  }
+  return str;
+}
+
 class DynamicTextHighlighting extends StatelessWidget {
   //DynamicTextHighlighting
   final String text;
@@ -83,11 +92,11 @@ class DynamicTextHighlighting extends StatelessWidget {
     int _start = 0;
 
     //For "No Case Sensitive" option
-    String _lowerCaseText = text.toLowerCase();
+    String _lowerCaseText = removeAccents(text.toLowerCase());
     List<String> _lowerCaseHighlights = List();
 
     highlights.forEach((element) {
-      _lowerCaseHighlights.add(element.toLowerCase());
+      _lowerCaseHighlights.add(removeAccents(element.toLowerCase()));
     });
 
     while (true) {
